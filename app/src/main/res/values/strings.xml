@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Demo</string>
+    <string name="search_hint">Search</string>
+    <string name="api_key">a3b60363766886905753f104b589e8aa</string>
+    <string name="method">album.search</string>
+    <string name="album">all</string>
+    <string name="format">json</string>
+</resources>
