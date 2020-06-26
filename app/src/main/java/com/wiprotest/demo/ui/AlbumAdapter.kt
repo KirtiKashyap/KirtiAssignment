@@ -47,7 +47,7 @@ class AlbumViewHolder(itemView : View): RecyclerView.ViewHolder(itemView){
         }
 
         artistTV.text = "Artist: "+results.albummatches.album[layoutPosition].artist
-        albumNameTV.text = "Artist: "+results.albummatches.album[layoutPosition].name
+        albumNameTV.text = results.albummatches.album[layoutPosition].name
         itemView.setOnClickListener {
                 val intent = Intent(itemView.context, DetailActivity::class.java)
                 intent.putExtra("albumDetail", results.albummatches.album[layoutPosition])

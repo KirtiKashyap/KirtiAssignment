@@ -33,7 +33,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="2dp"
             android:layout_marginStart="4dp"
-            android:text="movie"
+            android:text="album"
             android:textSize="12sp"
             android:maxLines="1"
             android:ellipsize="end"/>

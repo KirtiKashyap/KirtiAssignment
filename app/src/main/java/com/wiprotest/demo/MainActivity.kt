@@ -35,7 +35,7 @@ class MainActivity : AppCompatActivity(),UiView {
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.menu_search, menu)
-        lateinit var  searchText : String
+        var  searchText : String=""
 
         val menuSearch:MenuItem = menu.findItem(R.id.search)
         val searchView : SearchView= menuSearch.actionView as SearchView
@@ -55,6 +55,7 @@ class MainActivity : AppCompatActivity(),UiView {
         val menuSearchClick:MenuItem = menu.findItem(R.id.click)
         val clickTV : ImageButton= menuSearchClick.actionView as ImageButton
         clickTV.setOnClickListener {
+            if(searchText !=null)
             albumPresenter.getAlbum(searchText)
         }
         return true
