@@ -21,10 +21,11 @@ class MainActivity : AppCompatActivity(),UiView {
     lateinit var gridLayoutManager : GridLayoutManager
     lateinit var albumPresenter: AlbumPresenter
     override fun onCreate(savedInstanceState: Bundle?) {
+
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         val albumService : AlbumService =
-            AlbumService(this)
+         AlbumService(this)
          albumPresenter=
              AlbumPresenter(this, albumService)
         screenSizeName=getSizeName(this)
