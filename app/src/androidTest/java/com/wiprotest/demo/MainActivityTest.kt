@@ -53,6 +53,6 @@ class MainActivityTest {
     @Test
     fun testScreenSize_SIZE_XTRALARGE() {
         val screenSize = mManiActivity.getScreenSize(4)
-        assertEquals("extralarge",screenSize) /* if is extra large */
+        assertEquals("extralarge",screenSize) /* if screen is extra large */
     }
 }
