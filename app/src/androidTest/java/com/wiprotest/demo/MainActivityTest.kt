@@ -1,16 +1,13 @@
 package com.wiprotest.demo
 
-import android.content.res.Configuration
 import android.view.View
 import androidx.test.runner.AndroidJUnit4
-//import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.rule.ActivityTestRule
 import kotlinx.android.synthetic.main.activity_main.*
 import org.junit.*
 
 import org.junit.Assert.*
 import org.junit.runner.RunWith
-import org.junit.runners.JUnit4
 
 /* Unit test for activity successfully launched or not */
 @RunWith(AndroidJUnit4::class)

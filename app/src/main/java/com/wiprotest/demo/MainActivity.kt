@@ -24,18 +24,19 @@ class MainActivity : AppCompatActivity(),UiView {
 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        val albumService : AlbumService =
-         AlbumService(this)
+        val albumService = AlbumService(this)
          albumPresenter=
              AlbumPresenter(this, albumService)
-        screenSizeName=getSizeName(this)
+        val screenLayout: Int = getResources().getConfiguration().screenLayout
+        screenSizeName = getScreenSize(screenLayout)
+
         gridLayoutManager = GridLayoutManager(this, 3)
         albumPresenter.getAlbum(getString(R.string.album))
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.menu_search, menu)
-        var  searchText : String=""
+        var  searchText =""
 
         val menuSearch:MenuItem = menu.findItem(R.id.search)
         val searchView : SearchView= menuSearch.actionView as SearchView
@@ -46,7 +47,6 @@ class MainActivity : AppCompatActivity(),UiView {
                 return false
             }
             override fun onQueryTextSubmit(query: String): Boolean {
-                searchText=query
                 albumPresenter.getAlbum(query)
                 return false
             }
@@ -55,23 +55,12 @@ class MainActivity : AppCompatActivity(),UiView {
         val menuSearchClick:MenuItem = menu.findItem(R.id.click)
         val clickTV : ImageButton= menuSearchClick.actionView as ImageButton
         clickTV.setOnClickListener {
-            if(searchText !=null)
             albumPresenter.getAlbum(searchText)
         }
         return true
 
     }
-    private fun getSizeName(context: Context): String {
-        var screenLayout: Int = context.getResources().getConfiguration().screenLayout
-        screenLayout = screenLayout and Configuration.SCREENLAYOUT_SIZE_MASK
-        return when (screenLayout) {
-            Configuration.SCREENLAYOUT_SIZE_SMALL -> "small"
-            Configuration.SCREENLAYOUT_SIZE_NORMAL -> "medium"
-            Configuration.SCREENLAYOUT_SIZE_LARGE -> "large"
-            4 -> "extralarge"
-            else -> "undefined"
-        }
-    }
+
 
     override fun startMainActivity(apiResponse : Response<PopuralAlbum>) {
         progress_bar.visibility = View.GONE
@@ -81,9 +70,20 @@ class MainActivity : AppCompatActivity(),UiView {
             if (apiResponse != null) {
                 if(apiResponse.isSuccessful)
                     adapter =
-                        AlbumAdapter(apiResponse?.body()!!.results,screenSizeName)
+                        AlbumAdapter(apiResponse.body()!!.results,screenSizeName)
                 (adapter as AlbumAdapter).notifyDataSetChanged()
             }
+        }
+    }
+
+    override fun getScreenSize(screenInt: Int): String{
+        val screenSizeInt = screenInt and Configuration.SCREENLAYOUT_SIZE_MASK
+        return when (screenSizeInt) {
+            Configuration.SCREENLAYOUT_SIZE_SMALL -> "small"
+            Configuration.SCREENLAYOUT_SIZE_NORMAL -> "medium"
+            Configuration.SCREENLAYOUT_SIZE_LARGE -> "large"
+            4 -> "extralarge"
+            else -> "undefined"
         }
     }
 }
