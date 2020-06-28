@@ -22,21 +22,25 @@ class MainActivityTest {
     /* for activity test we need activity rule */
     @get:Rule
     val mActivityRule: ActivityTestRule<MainActivity> = ActivityTestRule(MainActivity::class.java)
-    var mManiActivity:  MainActivity?=null
+    var mManiActivity: MainActivity? = null
     var activityMonitor: ActivityMonitor = getInstrumentation().addMonitor(
-        DetailActivity::class.java.getName(), null, false)
-        @Before
-        fun setUp() {
-            /*get the instance for activity*/
-            mManiActivity = mActivityRule.activity
-        }
+        DetailActivity::class.java.getName(), null, false
+    )
+
+    @Before
+    fun setUp() {
+        /*get the instance for activity*/
+        mManiActivity = mActivityRule.activity
+    }
+
     @After
     fun tearDown() {
-        mManiActivity=null /*do activity null at the end*/
+        mManiActivity = null /*do activity null at the end*/
     }
+
     @Test
-    fun launch(){
-        val view : View = mManiActivity!!.linearLayout
+    fun launch() {
+        val view: View = mManiActivity!!.linearLayout
         assertNotNull(view) /* if view is not null the activity is successfully launched */
     }
 
@@ -49,17 +53,19 @@ class MainActivityTest {
     @Test
     fun testScreenSize_SIZE_MEDIUM() {
         val screenSize = mManiActivity!!.getScreenSize(2)
-        assertEquals("medium",screenSize) /* if screen is medium */
+        assertEquals("medium", screenSize) /* if screen is medium */
     }
+
     @Test
     fun testScreenSize_SIZE_LARGE() {
         val screenSize = mManiActivity!!.getScreenSize(3)
-        assertEquals("large",screenSize) /* if screen is large */
+        assertEquals("large", screenSize) /* if screen is large */
     }
+
     @Test
     fun testScreenSize_SIZE_XTRALARGE() {
         val screenSize = mManiActivity!!.getScreenSize(4)
-        assertEquals("extralarge",screenSize) /* if screen is extra large */
+        assertEquals("extralarge", screenSize) /* if screen is extra large */
     }
 
 }

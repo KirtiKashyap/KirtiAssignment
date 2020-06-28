@@ -9,4 +9,4 @@ import kotlinx.android.parcel.Parcelize
 data class Attr(
     @SerializedName("for")
     val forX: String
-): Parcelable
+) : Parcelable

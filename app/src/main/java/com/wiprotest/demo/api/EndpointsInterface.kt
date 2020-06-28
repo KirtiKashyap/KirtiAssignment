@@ -11,5 +11,10 @@ import retrofit2.http.Query
 
 interface EndpointsInterface {
     @GET(".")
-    fun getAlbum( @Query("method") key: String, @Query("album") album: String, @Query("format") format: String,@Query("api_key") method: String): Call<PopuralAlbum>
-  }
+    fun getAlbum(
+        @Query("method") key: String,
+        @Query("album") album: String,
+        @Query("format") format: String,
+        @Query("api_key") method: String
+    ): Call<PopuralAlbum>
+}

@@ -9,4 +9,4 @@ import kotlinx.android.parcel.Parcelize
 data class Albummatches(
     @SerializedName("album")
     val album: List<Album>
-): Parcelable
+) : Parcelable

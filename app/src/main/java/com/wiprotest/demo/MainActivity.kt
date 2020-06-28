@@ -1,4 +1,5 @@
 package com.wiprotest.demo
+
 import android.content.res.Configuration
 import android.os.Bundle
 import android.view.Menu
@@ -14,10 +15,10 @@ import com.wiprotest.demo.util.AlbumService
 import kotlinx.android.synthetic.main.activity_main.*
 import retrofit2.Response
 
-class MainActivity : AppCompatActivity(),UiView {
-    var screenSizeName : String=""
-    lateinit var albumService : AlbumService
-    lateinit var gridLayoutManager : GridLayoutManager
+class MainActivity : AppCompatActivity(), UiView {
+    var screenSizeName: String = ""
+    lateinit var albumService: AlbumService
+    lateinit var gridLayoutManager: GridLayoutManager
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
@@ -35,10 +36,10 @@ class MainActivity : AppCompatActivity(),UiView {
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.menu_search, menu)
-        var  searchText =""
+        var searchText = ""
 
-        val menuSearch:MenuItem = menu.findItem(R.id.search)
-        val searchView : SearchView= menuSearch.actionView as SearchView
+        val menuSearch: MenuItem = menu.findItem(R.id.search)
+        val searchView: SearchView = menuSearch.actionView as SearchView
 
         menuSearch.setOnActionExpandListener(object : MenuItem.OnActionExpandListener {
             override fun onMenuItemActionExpand(item: MenuItem?): Boolean {
@@ -54,9 +55,10 @@ class MainActivity : AppCompatActivity(),UiView {
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
 
             override fun onQueryTextChange(newText: String): Boolean {
-                searchText=newText
+                searchText = newText
                 return false
             }
+
             override fun onQueryTextSubmit(query: String): Boolean {
                 albumService.getApiCallResponse(query)
                 return false
@@ -64,8 +66,8 @@ class MainActivity : AppCompatActivity(),UiView {
 
         })
 
-        val menuSearchClick:MenuItem = menu.findItem(R.id.click)
-        val clickTV : ImageButton= menuSearchClick.actionView as ImageButton
+        val menuSearchClick: MenuItem = menu.findItem(R.id.click)
+        val clickTV: ImageButton = menuSearchClick.actionView as ImageButton
         clickTV.setOnClickListener {
             albumService.getApiCallResponse(searchText)
         }
@@ -73,28 +75,26 @@ class MainActivity : AppCompatActivity(),UiView {
 
     }
 
-
-
-    override fun viewData(apiResponse : Response<PopuralAlbum>) {
+    override fun viewData(apiResponse: Response<PopuralAlbum>) {
         progress_bar.visibility = View.GONE
         rv_album_list.apply {
             setHasFixedSize(true)
             layoutManager = gridLayoutManager
-                if(apiResponse.isSuccessful)
-                    if(apiResponse.body()!!.results.albummatches.album.size==0){
-                        rv_album_list.visibility=View.GONE
-                        tv_nodata.visibility=View.VISIBLE
-                    }else {
-                        rv_album_list.visibility=View.VISIBLE
-                        tv_nodata.visibility=View.GONE
-                        adapter =
-                            AlbumAdapter(apiResponse.body()!!.results, screenSizeName)
-                        (adapter as AlbumAdapter).notifyDataSetChanged()
-                    }
+            if (apiResponse.isSuccessful)
+                if (apiResponse.body()!!.results.albummatches.album.size == 0) {
+                    rv_album_list.visibility = View.GONE
+                    tv_nodata.visibility = View.VISIBLE
+                } else {
+                    rv_album_list.visibility = View.VISIBLE
+                    tv_nodata.visibility = View.GONE
+                    adapter =
+                        AlbumAdapter(apiResponse.body()!!.results, screenSizeName)
+                    (adapter as AlbumAdapter).notifyDataSetChanged()
+                }
         }
     }
 
-    override fun getScreenSize(screenInt: Int): String{
+    override fun getScreenSize(screenInt: Int): String {
         val screenSizeInt = screenInt and Configuration.SCREENLAYOUT_SIZE_MASK
         return when (screenSizeInt) {
             Configuration.SCREENLAYOUT_SIZE_SMALL -> "small"
@@ -105,11 +105,7 @@ class MainActivity : AppCompatActivity(),UiView {
         }
     }
 
-    override fun viewError(resposeCode : Int) {
+    override fun viewError(resposeCode: Int) {
 
-    }
-
-    override fun onBackPressed() {
-        super.onBackPressed()
     }
 }

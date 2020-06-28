@@ -11,4 +11,4 @@ data class Image(
     val size: String,
     @SerializedName("#text")
     val text: String
-): Parcelable
+) : Parcelable

@@ -15,4 +15,4 @@ data class OpensearchQuery(
     val startPage: String,
     @SerializedName("#text")
     val text: String
-): Parcelable
+) : Parcelable
