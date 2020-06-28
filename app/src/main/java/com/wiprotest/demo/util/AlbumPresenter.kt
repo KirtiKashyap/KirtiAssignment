@@ -14,6 +14,9 @@ class AlbumPresenter(mainActivity: MainActivity, albumService: AlbumService) {
     fun getAlbum(album: String): Response<PopuralAlbum>? {
         val apiResponse: Response<PopuralAlbum>? = service.getApiCallResponse(album)
         if (apiResponse!=null && apiResponse.isSuccessful) {
+            view.startMainActivity(apiResponse)
+        }else{
+
         }
         return apiResponse
     }
