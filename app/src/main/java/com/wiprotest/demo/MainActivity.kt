@@ -39,6 +39,18 @@ class MainActivity : AppCompatActivity(),UiView {
 
         val menuSearch:MenuItem = menu.findItem(R.id.search)
         val searchView : SearchView= menuSearch.actionView as SearchView
+
+        menuSearch.setOnActionExpandListener(object : MenuItem.OnActionExpandListener {
+            override fun onMenuItemActionExpand(item: MenuItem?): Boolean {
+                return true
+            }
+
+            override fun onMenuItemActionCollapse(item: MenuItem?): Boolean {
+                albumService.getApiCallResponse(getString(R.string.album))
+                return true
+            }
+        })
+
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
 
             override fun onQueryTextChange(newText: String): Boolean {
@@ -51,6 +63,7 @@ class MainActivity : AppCompatActivity(),UiView {
             }
 
         })
+
         val menuSearchClick:MenuItem = menu.findItem(R.id.click)
         val clickTV : ImageButton= menuSearchClick.actionView as ImageButton
         clickTV.setOnClickListener {
@@ -59,6 +72,7 @@ class MainActivity : AppCompatActivity(),UiView {
         return true
 
     }
+
 
 
     override fun viewData(apiResponse : Response<PopuralAlbum>) {
@@ -93,5 +107,9 @@ class MainActivity : AppCompatActivity(),UiView {
 
     override fun viewError(resposeCode : Int) {
 
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
     }
 }
