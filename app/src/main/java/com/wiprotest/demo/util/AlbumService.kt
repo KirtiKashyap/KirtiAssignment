@@ -14,22 +14,20 @@ init {
     view=mainActivity
 }
     val request= ServiceBuilder.buildService(EndpointsInterface::class.java)
-    fun getApiCallResponse(albumString: String): Response<PopuralAlbum>? {
-        var responseData :Response<PopuralAlbum>?=null
+    fun getApiCallResponse(albumString: String){
         val call = request.getAlbum(Constants.METHOD_NAME,albumString,Constants.FORMAT,Constants.API_KEY)
         call.enqueue(object : Callback<PopuralAlbum> {
             override fun onResponse(call: Call<PopuralAlbum>, response: Response<PopuralAlbum>) {
                 if (response.isSuccessful){
-                    responseData=response
-                    view.startMainActivity(responseData!!)
+                    view.viewData(response)
                 }else{
                     response.errorBody()
+                    view.viewError(response.code())
                 }
             }
             override fun onFailure(call: Call<PopuralAlbum>, t: Throwable) {
-                responseData=null
+
             }
         })
-        return responseData
     }
 }

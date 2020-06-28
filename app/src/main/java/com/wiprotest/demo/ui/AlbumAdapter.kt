@@ -12,6 +12,7 @@ import com.wiprotest.demo.R
 import com.wiprotest.demo.model.Results
 
 class AlbumAdapter(val results: Results, val screenSizeName: String): RecyclerView.Adapter<AlbumViewHolder>() {
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AlbumViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.album_list_item, parent, false)
         return AlbumViewHolder(view)
@@ -26,8 +27,8 @@ class AlbumAdapter(val results: Results, val screenSizeName: String): RecyclerVi
     }
 
 }
-
 class AlbumViewHolder(itemView : View): RecyclerView.ViewHolder(itemView){
+
     private val photoIV: ImageView = itemView.findViewById(R.id.cv_iv_poster)
     private val artistTV:TextView = itemView.findViewById(R.id.artist)
     private val albumNameTV:TextView = itemView.findViewById(R.id.abum_name)

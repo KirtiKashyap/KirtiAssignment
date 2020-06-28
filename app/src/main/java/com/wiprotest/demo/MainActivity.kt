@@ -10,27 +10,27 @@ import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.GridLayoutManager
 import com.wiprotest.demo.model.PopuralAlbum
 import com.wiprotest.demo.ui.AlbumAdapter
-import com.wiprotest.demo.util.AlbumPresenter
 import com.wiprotest.demo.util.AlbumService
 import kotlinx.android.synthetic.main.activity_main.*
 import retrofit2.Response
 
 class MainActivity : AppCompatActivity(),UiView {
     var screenSizeName : String=""
+    lateinit var albumService : AlbumService
     lateinit var gridLayoutManager : GridLayoutManager
-    lateinit var albumPresenter: AlbumPresenter
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        val albumService = AlbumService(this)
-         albumPresenter=
-             AlbumPresenter(this, albumService)
+
+        albumService = AlbumService(this)
+        albumService.getApiCallResponse(getString(R.string.album))
+
         val screenLayout: Int = getResources().getConfiguration().screenLayout
         screenSizeName = getScreenSize(screenLayout)
 
         gridLayoutManager = GridLayoutManager(this, 3)
-        albumPresenter.getAlbum(getString(R.string.album))
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -46,7 +46,7 @@ class MainActivity : AppCompatActivity(),UiView {
                 return false
             }
             override fun onQueryTextSubmit(query: String): Boolean {
-                albumPresenter.getAlbum(query)
+                albumService.getApiCallResponse(query)
                 return false
             }
 
@@ -54,24 +54,29 @@ class MainActivity : AppCompatActivity(),UiView {
         val menuSearchClick:MenuItem = menu.findItem(R.id.click)
         val clickTV : ImageButton= menuSearchClick.actionView as ImageButton
         clickTV.setOnClickListener {
-            albumPresenter.getAlbum(searchText)
+            albumService.getApiCallResponse(searchText)
         }
         return true
 
     }
 
 
-    override fun startMainActivity(apiResponse : Response<PopuralAlbum>) {
+    override fun viewData(apiResponse : Response<PopuralAlbum>) {
         progress_bar.visibility = View.GONE
         rv_album_list.apply {
             setHasFixedSize(true)
             layoutManager = gridLayoutManager
-            if (apiResponse != null) {
                 if(apiResponse.isSuccessful)
-                    adapter =
-                        AlbumAdapter(apiResponse.body()!!.results,screenSizeName)
-                (adapter as AlbumAdapter).notifyDataSetChanged()
-            }
+                    if(apiResponse.body()!!.results.albummatches.album.size==0){
+                        rv_album_list.visibility=View.GONE
+                        tv_nodata.visibility=View.VISIBLE
+                    }else {
+                        rv_album_list.visibility=View.VISIBLE
+                        tv_nodata.visibility=View.GONE
+                        adapter =
+                            AlbumAdapter(apiResponse.body()!!.results, screenSizeName)
+                        (adapter as AlbumAdapter).notifyDataSetChanged()
+                    }
         }
     }
 
@@ -84,5 +89,9 @@ class MainActivity : AppCompatActivity(),UiView {
             4 -> "extralarge"
             else -> "undefined"
         }
+    }
+
+    override fun viewError(resposeCode : Int) {
+
     }
 }

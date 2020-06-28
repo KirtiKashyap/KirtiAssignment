@@ -3,13 +3,8 @@ package com.wiprotest.demo
 import android.app.Instrumentation.ActivityMonitor
 import android.view.View
 import androidx.test.InstrumentationRegistry.getInstrumentation
-import androidx.test.espresso.Espresso.onView
-import androidx.test.espresso.action.ViewActions.click
-import androidx.test.espresso.contrib.RecyclerViewActions
-import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.rule.ActivityTestRule
 import androidx.test.runner.AndroidJUnit4
-import com.wiprotest.demo.ui.AlbumViewHolder
 import com.wiprotest.demo.ui.DetailActivity
 import kotlinx.android.synthetic.main.activity_main.*
 import org.junit.After
@@ -66,9 +61,5 @@ class MainActivityTest {
         val screenSize = mManiActivity!!.getScreenSize(4)
         assertEquals("extralarge",screenSize) /* if screen is extra large */
     }
-   /* @Test
-    fun detailActivityLaunchTest(){
-        assertNotNull(mManiActivity!!.rv_album_list)
-        onView(withId(R.id.rv_album_list)).perform(RecyclerViewActions.actionOnItemAtPosition<AlbumViewHolder>(0,click()));
-    }*/
+
 }
