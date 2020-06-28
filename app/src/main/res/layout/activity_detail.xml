@@ -19,16 +19,14 @@
             android:layout_marginStart="4dp"
             android:textSize="12sp"
             android:textColor="@color/cardview_dark_background"
-            android:maxLines="1"
             android:ellipsize="end"/>
 
         <TextView
             android:id="@+id/abum_name"
             android:layout_width="wrap_content"
-            android:layout_height="40dp"
+            android:layout_height="wrap_content"
             android:layout_marginStart="4dp"
             android:layout_marginBottom="4dp"
             android:textColor="@color/cardview_dark_background"
-            android:maxLength="4"
             android:textSize="12sp"/>
 </LinearLayout>
